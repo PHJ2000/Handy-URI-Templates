@@ -23,9 +23,9 @@ Do not use `mvn` directly; always use `./mvnw` to ensure a consistent Maven vers
 
 ## Java Version
 
-- **Source/Target compatibility:** Java 7 (`1.7`)
-- **CI builds:** OpenJDK 8
-- Do not use language features or APIs above Java 7 in production code.
+- **Source/Target compatibility:** Java 11
+- **CI builds:** OpenJDK 11
+- Do not use language features or APIs above Java 11 in production code.
 
 ## Project Structure
 
@@ -38,6 +38,8 @@ src/test/java/com/damnhandy/uri/template/conformance/ # RFC6570 compliance tests
 config/checkstyle.xml                                  # Checkstyle rules
 uritemplate-test/                                      # RFC6570 test suite (git submodule)
 ```
+
+The directory `uritemplate-test` is a git submodule which must be initialized and updated before building or test cases wil fail.
 
 ## Testing
 
@@ -88,7 +90,7 @@ All Java source files must include the Apache License 2.0 header with copyright 
 
 ## CI/CD
 
-GitHub Actions (`.github/workflows/maven.yml`) runs `mvn -B package` on pushes and PRs to `master` using JDK 8.
+GitHub Actions (`.github/workflows/maven.yml`) runs `mvn -B package` on pushes and PRs to `master` using JDK 11.
 
 ## Publishing
 
