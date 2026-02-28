@@ -15,7 +15,7 @@
  */
 package com.damnhandy.uri.template;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -25,9 +25,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Testing some use cases with different date formats;
@@ -45,7 +45,7 @@ public class TestWithDateFormats
 
    private Date date;
 
-   @Before
+   @BeforeEach
    public void setUp()
    {
       Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT-04:00"));
@@ -65,7 +65,7 @@ public class TestWithDateFormats
     * @throws Exception
     */
    @Test
-   @Ignore
+   @Disabled
    public void testWithDefaultDateFormat() throws Exception
    {
       String uri = UriTemplate.fromTemplate(TEMPLATE).set("date", date).expand();

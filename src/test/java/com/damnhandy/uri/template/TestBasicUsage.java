@@ -15,8 +15,8 @@
  */
 package com.damnhandy.uri.template;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -44,7 +44,7 @@ public class TestBasicUsage
                                .set("thing", "A test")
                                .expand();
 
-      Assert.assertEquals("/h/houses/A%20test?query=Ask%20something&test2=someting%20else", uri);
+      Assertions.assertEquals("/h/houses/A%20test?query=Ask%20something&test2=someting%20else", uri);
    }
 
    /**
@@ -57,7 +57,7 @@ public class TestBasicUsage
    @Test
    public void testNoExpressionAndNoVars() throws Exception {
        String result = UriTemplate.expand("https://foo.com:8080", new HashMap<String, Object>());
-       Assert.assertEquals("https://foo.com:8080", result);
+       Assertions.assertEquals("https://foo.com:8080", result);
    }
 
    @Test
@@ -67,7 +67,7 @@ public class TestBasicUsage
                                     .set("myId","damnhandy")
                                     .set("version","v1"); // URI versioning is silly, but this is just for examples
 
-      Assert.assertEquals(2, base.getValues().size());
+      Assertions.assertEquals(2, base.getValues().size());
       UriTemplate child = UriTemplate.buildFromTemplate(base)
                                             .literal("/things")
                                             .path("thingId")
@@ -75,14 +75,14 @@ public class TestBasicUsage
                                             .set("thingId","123öä");
 
 
-      Assert.assertEquals(3, child.getValues().size());
+      Assertions.assertEquals(3, child.getValues().size());
       Map<String, Object> childValues = child.getValues();
       for(Entry<String, Object> e : base.getValues().entrySet())
       {
-         Assert.assertTrue(childValues.containsKey(e.getKey()));
-         Assert.assertEquals(e.getValue(), childValues.get(e.getKey()));
+         Assertions.assertTrue(childValues.containsKey(e.getKey()));
+         Assertions.assertEquals(e.getValue(), childValues.get(e.getKey()));
       }
-      Assert.assertEquals("http://myhost/v1/damnhandy/things/123%C3%B6%C3%A4", child.expand());
+      Assertions.assertEquals("http://myhost/v1/damnhandy/things/123%C3%B6%C3%A4", child.expand());
    }
 
 
@@ -99,9 +99,9 @@ public class TestBasicUsage
                                                .set("version","v1")
                                                .set("thingId","12345");
 
-      Assert.assertEquals(3, template.getValues().size());
-      Assert.assertEquals("http://myhost{/version}{/myId}/things/{thingId}", template.getTemplate());
-      Assert.assertEquals("http://myhost/v1/damnhandy/things/12345", template.expand());
+      Assertions.assertEquals(3, template.getValues().size());
+      Assertions.assertEquals("http://myhost{/version}{/myId}/things/{thingId}", template.getTemplate());
+      Assertions.assertEquals("http://myhost/v1/damnhandy/things/12345", template.expand());
    }
 
 
@@ -112,8 +112,8 @@ public class TestBasicUsage
                                           .fragment("message")
                                           .build().set("message","Hello%20World");
 
-        Assert.assertEquals("http://myhost{#message}",template.getTemplate());
-        Assert.assertEquals("http://myhost#Hello%20World",template.expand());
+        Assertions.assertEquals("http://myhost{#message}",template.getTemplate());
+        Assertions.assertEquals("http://myhost#Hello%20World",template.expand());
 
     }
 
@@ -124,8 +124,8 @@ public class TestBasicUsage
                                             .reserved("message")
                                             .build().set("message","Hello%20World");
 
-        Assert.assertEquals("http://myhost/{+message}",template.getTemplate());
-        Assert.assertEquals("http://myhost/Hello%20World",template.expand());
+        Assertions.assertEquals("http://myhost/{+message}",template.getTemplate());
+        Assertions.assertEquals("http://myhost/Hello%20World",template.expand());
 
     }
 
@@ -136,8 +136,8 @@ public class TestBasicUsage
                                           .fragment("message")
                                           .build().set("message","Hello%20World,everything is cool!");
 
-        Assert.assertEquals("http://myhost{#message}",template.getTemplate());
-        Assert.assertEquals("http://myhost#Hello%20World,everything%20is%20cool!",template.expand());
+        Assertions.assertEquals("http://myhost{#message}",template.getTemplate());
+        Assertions.assertEquals("http://myhost#Hello%20World,everything%20is%20cool!",template.expand());
     }
 
     @Test
@@ -147,8 +147,8 @@ public class TestBasicUsage
                                            .reserved("message")
                                            .build().set("message","Hello%20World,everything is cool!");
 
-        Assert.assertEquals("http://myhost/{+message}",template.getTemplate());
-        Assert.assertEquals("http://myhost/Hello%20World,everything%20is%20cool!",template.expand());
+        Assertions.assertEquals("http://myhost/{+message}",template.getTemplate());
+        Assertions.assertEquals("http://myhost/Hello%20World,everything%20is%20cool!",template.expand());
     }
 
     @Test
@@ -156,7 +156,7 @@ public class TestBasicUsage
     {
         UriTemplate t = UriTemplate.fromTemplate("{+half}");
         t.set("half","50%25");
-        Assert.assertEquals("50%25",t.expand());
+        Assertions.assertEquals("50%25",t.expand());
     }
 
     @Test
@@ -164,7 +164,7 @@ public class TestBasicUsage
     {
         UriTemplate t = UriTemplate.fromTemplate("{+half}");
         t.set("half","50%");
-        Assert.assertEquals("50%25",t.expand());
+        Assertions.assertEquals("50%25",t.expand());
     }
 
     /**

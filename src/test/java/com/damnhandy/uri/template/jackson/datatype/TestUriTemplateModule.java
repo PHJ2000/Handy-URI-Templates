@@ -8,9 +8,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import com.damnhandy.uri.template.MalformedUriTemplateException;
 import com.damnhandy.uri.template.UriTemplate;
@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * A TestUriTemplateModule.
- * 
+ *
  * @author <a href="ryan@damnhandy.com">Ryan J. McDonough</a>
  * @version $Revision: 1.1 $
  */
@@ -29,7 +29,7 @@ public class TestUriTemplateModule
 
    private static ObjectMapper mapper;
 
-   @BeforeClass
+   @BeforeAll
    public static void setUp()
    {
       mapper = new ObjectMapper();
@@ -40,7 +40,7 @@ public class TestUriTemplateModule
    public void testDeserialize() throws Exception
    {
       Dummy dummy = mapper.readValue(new File("./src/test/resources/json/test1.json"), Dummy.class);
-      Assert.assertEquals("http://example.com/orders/{orderId}{?view}", dummy.getTemplate().getTemplate());
+      Assertions.assertEquals("http://example.com/orders/{orderId}{?view}", dummy.getTemplate().getTemplate());
    }
 
    @Test
@@ -54,16 +54,16 @@ public class TestUriTemplateModule
 
       catch (JsonMappingException e)
       {
-         Assert.assertTrue(e.getCause().getClass().isAssignableFrom(JsonParseException.class));
+         Assertions.assertTrue(e.getCause().getClass().isAssignableFrom(JsonParseException.class));
          JsonParseException jpe = (JsonParseException) e.getCause();
-         Assert.assertEquals(3, jpe.getLocation().getLineNr());
-         Assert.assertEquals(3, jpe.getLocation().getLineNr());
+         Assertions.assertEquals(3, jpe.getLocation().getLineNr());
+         Assertions.assertEquals(3, jpe.getLocation().getLineNr());
          MalformedUriTemplateException mte = (MalformedUriTemplateException) jpe.getCause();
-         Assert.assertEquals(40, mte.getLocation());
+         Assertions.assertEquals(40, mte.getLocation());
       }
       catch (IOException e)
       {
-         Assert.fail();
+         Assertions.fail();
       }
 
    }
@@ -77,8 +77,8 @@ public class TestUriTemplateModule
 
       Dummy dummy2 = mapper.readValue(out.toByteArray(), Dummy.class);
 
-      Assert.assertEquals("test", dummy2.getName());
-      Assert.assertEquals("http://example.com/orders/{orderId}{?view}", dummy2.getTemplate().getTemplate());
+      Assertions.assertEquals("test", dummy2.getName());
+      Assertions.assertEquals("http://example.com/orders/{orderId}{?view}", dummy2.getTemplate().getTemplate());
    }
 
    public static class Dummy
@@ -94,7 +94,7 @@ public class TestUriTemplateModule
 
       /**
        * Create a new Dummy.
-       * 
+       *
        * @param name
        * @param template
        */
@@ -107,7 +107,7 @@ public class TestUriTemplateModule
 
       /**
        * Get the name.
-       * 
+       *
        * @return the name.
        */
       public String getName()
@@ -117,7 +117,7 @@ public class TestUriTemplateModule
 
       /**
        * Set the name.
-       * 
+       *
        * @param name The name to set.
        */
       public void setName(String name)
@@ -127,7 +127,7 @@ public class TestUriTemplateModule
 
       /**
        * Get the template.
-       * 
+       *
        * @return the template.
        */
       public UriTemplate getTemplate()
@@ -137,7 +137,7 @@ public class TestUriTemplateModule
 
       /**
        * Set the template.
-       * 
+       *
        * @param template The template to set.
        */
       public void setTemplate(UriTemplate template)

@@ -2,8 +2,8 @@ package com.damnhandy.uri.template.impl;
 
 import com.damnhandy.uri.template.UriTemplate;
 import com.damnhandy.uri.template.UriTemplateBuilder;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -33,7 +33,7 @@ public class TestVarSpec {
     @Test
     public void testWithExplodeModifier() throws Exception {
         VarSpec varSpec = new VarSpec("experiment", Modifier.EXPLODE, null);
-        Assert.assertEquals("experiment", varSpec.getVariableName());
+        Assertions.assertEquals("experiment", varSpec.getVariableName());
     }
 
     @Test
@@ -42,7 +42,7 @@ public class TestVarSpec {
 
         UriTemplate template = UriTemplate.fromTemplate(templateString);
         String result = template.expand(VALUES);
-        Assert.assertEquals("http://foo.com/one/two/three", result);
+        Assertions.assertEquals("http://foo.com/one/two/three", result);
     }
 
 
@@ -52,7 +52,7 @@ public class TestVarSpec {
         VarSpec varSpec = UriTemplateBuilder.var("experiment", true);
 
         //then
-        Assert.assertEquals("experiment", varSpec.getVariableName());
+        Assertions.assertEquals("experiment", varSpec.getVariableName());
     }
 
     @Test
@@ -61,16 +61,16 @@ public class TestVarSpec {
         UriTemplate uriTemplate = buildFromTemplate("http://foo.com/").query(var("experiment", true)).build();
 
         //then
-        Assert.assertEquals("http://foo.com/{?experiment*}", uriTemplate.getTemplate());
+        Assertions.assertEquals("http://foo.com/{?experiment*}", uriTemplate.getTemplate());
     }
 
     @Test
     public void usingAnExpandedExplodedVariableInUriTemplateReturnsAURLContainingTheExpandedVariable() throws Exception {
         //when
         UriTemplate uriTemplate = buildFromTemplate("http://foo.com/").query(var("experiment", true)).build();
-        Assert.assertEquals("http://foo.com/{?experiment*}", uriTemplate.getTemplate());
+        Assertions.assertEquals("http://foo.com/{?experiment*}", uriTemplate.getTemplate());
         //then
-        Assert.assertEquals("http://foo.com/?experiment=expandedExperiment", uriTemplate.set("experiment", "expandedExperiment").expand());
+        Assertions.assertEquals("http://foo.com/?experiment=expandedExperiment", uriTemplate.set("experiment", "expandedExperiment").expand());
     }
 
 

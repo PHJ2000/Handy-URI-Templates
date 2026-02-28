@@ -1,36 +1,27 @@
 package com.damnhandy.uri.template;
 
 import com.damnhandy.uri.template.conformance.AbstractUriTemplateConformanceTest;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Assertions;
+
 import java.util.Map;
 
 /**
  * @author <a href="ryan@damnhandy.com">Ryan J. McDonough</a>
  * Created by ryan on 11/14/15.
  */
- @Ignore
-public class AbstractUriTemplateBuilderTests extends AbstractUriTemplateConformanceTest
+public abstract class AbstractUriTemplateBuilderTests extends AbstractUriTemplateConformanceTest
 {
 
     /**
-     * @param vars
+     * Executes a builder conformance test case.
+     *
+     * @param variables
      * @param template
      * @param expected
      * @param testsuite
-     */
-    public AbstractUriTemplateBuilderTests(Map<String, Object> vars, String template, Object expected, String testsuite)
-    {
-        super(vars, template, expected, testsuite);
-    }
-
-    /**
-     *
      * @throws Exception
      */
-    @Test
-    public void test() throws Exception
+    protected static void executeBuilderTest(Map<String, Object> variables, String template, Object expected, String testsuite) throws Exception
     {
         UriTemplate original = UriTemplate.fromTemplate(template);
         UriTemplateBuilder originalBuilder = UriTemplate.buildFromTemplate(original);
@@ -43,6 +34,6 @@ public class AbstractUriTemplateBuilderTests extends AbstractUriTemplateConforma
         }
         UriTemplate rebuiltTemplate = builder.build();
 
-        Assert.assertEquals(original.getTemplate(), rebuiltTemplate.getTemplate());
+        Assertions.assertEquals(original.getTemplate(), rebuiltTemplate.getTemplate());
     }
 }

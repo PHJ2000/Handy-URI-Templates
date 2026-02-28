@@ -6,8 +6,8 @@ package com.damnhandy.uri.template.jackson.datatype;
 
 import java.io.ByteArrayOutputStream;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import com.damnhandy.uri.template.MalformedUriTemplateException;
 import com.damnhandy.uri.template.UriTemplate;
@@ -35,8 +35,8 @@ public class TestUriTemplateWithAnnotations
       
       Dummy dummy2 = mapper.readValue(out.toByteArray(), Dummy.class);
       
-      Assert.assertEquals("test", dummy2.getName());
-      Assert.assertEquals("http://example.com/orders/{orderId}{?view}", dummy2.getTemplate().getTemplate());
+      Assertions.assertEquals("test", dummy2.getName());
+      Assertions.assertEquals("http://example.com/orders/{orderId}{?view}", dummy2.getTemplate().getTemplate());
    }
    
    

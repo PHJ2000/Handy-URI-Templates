@@ -43,7 +43,7 @@ The directory `uritemplate-test` is a git submodule which must be initialized an
 
 ## Testing
 
-- **Framework:** JUnit 4 with Hamcrest matchers
+- **Framework:** JUnit 5 (Jupiter) with Hamcrest matchers
 - **Run:** `./mvnw test`
 - **Code coverage:** JaCoCo with a 76% complexity coverage minimum
 - Conformance tests in `src/test/java/.../conformance/` verify RFC6570 spec compliance. These must always pass.
@@ -78,7 +78,7 @@ All Java source files must include the Apache License 2.0 header with copyright 
 | Dependency | Scope | Notes |
 |---|---|---|
 | jackson-core/databind/annotations | optional | JSON support |
-| junit 4.13.1 | test | Testing framework |
+| junit-jupiter 5.10.5 | test | Testing framework |
 | httpclient | test | Example/integration tests |
 
 ## Static Analysis

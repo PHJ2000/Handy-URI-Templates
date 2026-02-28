@@ -16,10 +16,12 @@
 package com.damnhandy.uri.template.conformance;
 
 import java.io.File;
-import java.util.Collection;
 import java.util.Map;
+import java.util.stream.Stream;
 
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  *
@@ -30,16 +32,17 @@ import org.junit.runners.Parameterized.Parameters;
 public class TestSpecExamples extends AbstractUriTemplateConformanceTest
 {
 
-   @Parameters(name = "{1}")
-   public static Collection<Object[]> testData() throws Exception
+   static Stream<Arguments> testData() throws Exception
    {
       File file = new File("./uritemplate-test/spec-examples.json");
       return loadTestData(file);
    }
 
-   public TestSpecExamples(Map<String, Object> vars, String template, Object expected, String testsuite)
+   @ParameterizedTest(name = "{1}")
+   @MethodSource("testData")
+   void test(Map<String, Object> vars, String template, Object expected, String testsuite) throws Exception
    {
-      super(vars, template, expected, testsuite);
+      executeConformanceTest(vars, template, expected, testsuite);
    }
 
 }

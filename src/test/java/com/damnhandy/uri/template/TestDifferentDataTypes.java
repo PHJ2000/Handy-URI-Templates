@@ -15,12 +15,12 @@
  */
 package com.damnhandy.uri.template;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 /**
@@ -126,11 +126,13 @@ public class TestDifferentDataTypes
         assertEquals("1,2,3", UriTemplate.fromTemplate(TEMPLATE_2).set("count", INT_COUNT).expand());
     }
 
-    @Test(expected = VariableExpansionException.class)
+    @Test
     public void testMultiDimensionalArray() throws Exception
     {
-        String[][] values = {{"one", "two"}, {"three", "four"}};
-        UriTemplate.fromTemplate(TEMPLATE_1).set("count", values).expand();
+        Assertions.assertThrows(VariableExpansionException.class, () -> {
+            String[][] values = {{"one", "two"}, {"three", "four"}};
+            UriTemplate.fromTemplate(TEMPLATE_1).set("count", values).expand();
+        });
     }
 
     @Test
@@ -146,7 +148,7 @@ public class TestDifferentDataTypes
         two.add("Four");
         values.add(two);
         String uri = UriTemplate.fromTemplate(TEMPLATE_2).set("count", values).expand();
-        Assert.assertEquals("One%2CTwo,Three%2CFour", uri);
+        Assertions.assertEquals("One%2CTwo,Three%2CFour", uri);
     }
 
     /**
@@ -165,7 +167,7 @@ public class TestDifferentDataTypes
         two.add("Four");
         values.put("two", two);
         String uri = UriTemplate.fromTemplate(TEMPLATE_2).set("count", values).expand();
-        Assert.assertEquals("one=One%2CTwo,two=Three%2CFour", uri);
+        Assertions.assertEquals("one=One%2CTwo,two=Three%2CFour", uri);
 
     }
 }

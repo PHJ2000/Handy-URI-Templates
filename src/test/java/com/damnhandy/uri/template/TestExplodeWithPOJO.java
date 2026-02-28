@@ -15,8 +15,8 @@
  */
 package com.damnhandy.uri.template;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +42,7 @@ public class TestExplodeWithPOJO
         address.setActive(true);
         String result = UriTemplate.fromTemplate(EXPLODE_TEMPLATE).set("address", address).expand();
 
-        Assert.assertEquals("/mapper?active=true&city=Newport%20Beach&state=CA", result);
+        Assertions.assertEquals("/mapper?active=true&city=Newport%20Beach&state=CA", result);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class TestExplodeWithPOJO
         Address address = new Address("4 Yawkey Way", "Boston", "MA", "02215-3496", "USA");
         address.setActive(true);
         String result = UriTemplate.fromTemplate(NON_EXPLODE_TEMPLATE).set("address", address).expand();
-        Assert.assertEquals("/mapper?address=true,Boston,USA,MA,4%20Yawkey%20Way,02215-3496", result);
+        Assertions.assertEquals("/mapper?address=true,Boston,USA,MA,4%20Yawkey%20Way,02215-3496", result);
     }
 
     /**
@@ -63,7 +63,7 @@ public class TestExplodeWithPOJO
         Address address = new Address("4 Yawkey Way", "Boston", "MA", "02215-3496", "USA");
         address.setActive(true);
         String result = UriTemplate.fromTemplate(EXPLODE_TEMPLATE).set("address", address).expand();
-        Assert.assertEquals("/mapper?active=true&city=Boston&country=USA&state=MA&street=4%20Yawkey%20Way&zipcode=02215-3496", result);
+        Assertions.assertEquals("/mapper?active=true&city=Boston&country=USA&state=MA&street=4%20Yawkey%20Way&zipcode=02215-3496", result);
     }
 
     @Test
@@ -74,7 +74,7 @@ public class TestExplodeWithPOJO
         address.setLabel("A label");
         String result = UriTemplate.fromTemplate(EXPLODE_TEMPLATE).set("address", address).expand();
 
-        Assert.assertEquals(
+        Assertions.assertEquals(
         "/mapper?active=false&city=Boston&country=USA&label=A%20label&state=MA&street=4%20Yawkey%20Way&zipcode=02215-3496",
         result);
     }
@@ -89,7 +89,7 @@ public class TestExplodeWithPOJO
         address.addStuff("moo");
         String result = UriTemplate.fromTemplate(EXPLODE_TEMPLATE).set("address", address).expand();
 
-        Assert.assertEquals(
+        Assertions.assertEquals(
         "/mapper?active=false&city=Boston&country=USA&state=MA&street=4%20Yawkey%20Way&stuff=foo%2Cbar%2Cmoo&zipcode=02215-3496",
         result);
     }
@@ -101,7 +101,7 @@ public class TestExplodeWithPOJO
         Map<String, Object> values = new HashMap<String, Object>();
         values.put("address", new DefaultVarExploder(address));
         String result = UriTemplate.expand(EXPLODE_TEMPLATE, values);
-        Assert.assertEquals("/mapper?active=false&city=Boston&country=USA&state=MA&street=4%20Yawkey%20Way&zipcode=02215-3496", result);
+        Assertions.assertEquals("/mapper?active=false&city=Boston&country=USA&state=MA&street=4%20Yawkey%20Way&zipcode=02215-3496", result);
 
     }
 }

@@ -1,8 +1,8 @@
 package com.damnhandy.uri.template;
 
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,7 +28,7 @@ public class TestNestedDataStructures
                                     .set("queryParams", new QueryParams(Arrays.asList("a","b","c"), Arrays.asList("1","2","3")))
                                     .expand();
 
-        Assert.assertEquals("/test?field=a%2Cb%2Cc&user=1%2C2%2C3", result);
+        Assertions.assertEquals("/test?field=a%2Cb%2Cc&user=1%2C2%2C3", result);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class TestNestedDataStructures
         .set("queryParams", new QueryParams(Arrays.asList("a","b","c"), Arrays.asList("1","2","3")))
         .expand();
 
-        Assert.assertEquals("/test?queryParams=a%2Cb%2Cc,1%2C2%2C3", result);
+        Assertions.assertEquals("/test?queryParams=a%2Cb%2Cc,1%2C2%2C3", result);
     }
 
     /**
@@ -46,40 +46,40 @@ public class TestNestedDataStructures
      *
      * @throws Exception
      */
-    @Test(expected = VariableExpansionException.class)
+    @Test
     public void testWithParamsWithMaps() throws Exception
     {
-        Map<String, String> values = new HashMap<>();
-        values.put("foo", "bar");
-        values.put("moo", "foo");
+        Assertions.assertThrows(VariableExpansionException.class, () -> {
+            Map<String, String> values = new HashMap<>();
+            values.put("foo", "bar");
+            values.put("moo", "foo");
 
-
-
-        String result =  UriTemplate.fromTemplate("/test{?queryParams*}")
-                                    .set("queryParams", new ParamsWithMaps(values, Arrays.asList("1","2","3")))
-                                    .expand();
-
-
+            String result =  UriTemplate.fromTemplate("/test{?queryParams*}")
+                                        .set("queryParams", new ParamsWithMaps(values, Arrays.asList("1","2","3")))
+                                        .expand();
+        });
     }
 
     /**
      *
      * @throws Exception
      */
-    @Test(expected = VariableExpansionException.class)
+    @Test
     public void testCompositeClass() throws Exception
     {
-        Address address = new Address();
-        address.setState("CA");
-        address.setCity("Newport Beach");
-        address.setActive(true);
-        Person person = new Person("John Worphin", address);
+        Assertions.assertThrows(VariableExpansionException.class, () -> {
+            Address address = new Address();
+            address.setState("CA");
+            address.setCity("Newport Beach");
+            address.setActive(true);
+            Person person = new Person("John Worphin", address);
 
-        String result =  UriTemplate.fromTemplate("/test{?person*}")
-            .set("person", person)
-            .expand();
+            String result =  UriTemplate.fromTemplate("/test{?person*}")
+                .set("person", person)
+                .expand();
 
-        System.out.println(result);
+            System.out.println(result);
+        });
     }
 
 

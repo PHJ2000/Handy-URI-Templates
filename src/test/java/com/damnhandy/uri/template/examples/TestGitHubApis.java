@@ -19,10 +19,10 @@ import com.damnhandy.uri.template.UriTemplate;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.Request;
 import com.ning.http.client.RequestBuilder;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -65,18 +65,18 @@ public class TestGitHubApis extends AbstractExampleTest
     * the host is reachable.
     *
     */
-   @BeforeClass
+   @BeforeAll
    public static void setUp() throws Exception
    {
 
       try {
-          Assume.assumeTrue(InetAddress.getByName("api.github.com").isReachable(100));
-          Assume.assumeNotNull(System.getProperty("github.username"),
-                  System.getProperty("github.password"));
+          Assumptions.assumeTrue(InetAddress.getByName("api.github.com").isReachable(100));
+          Assumptions.assumeTrue(System.getProperty("github.username") != null);
+          Assumptions.assumeTrue(System.getProperty("github.password") != null);
       }
       catch (UnknownHostException e)
       {
-           Assume.assumeFalse(true);
+           Assumptions.assumeFalse(true);
       }
 
 
@@ -99,7 +99,7 @@ public class TestGitHubApis extends AbstractExampleTest
                                .set("page", 1)
                                .set("per_page", 4)
                                .expand()).build();
-      Assert.assertEquals("https://api.github.com/users/damnhandy/repos?page=1&per_page=4", request.getUrl());
+      Assertions.assertEquals("https://api.github.com/users/damnhandy/repos?page=1&per_page=4", request.getUrl());
       executeRequest(createClient(), request);
    }
    /**
@@ -123,7 +123,7 @@ public class TestGitHubApis extends AbstractExampleTest
                                .set("repo", "Handy-URI-Templates")
                                .set("function","commits")
                                .expand()).build();
-      Assert.assertEquals("https://api.github.com/repos/damnhandy/Handy-URI-Templates/commits", request.getUrl());
+      Assertions.assertEquals("https://api.github.com/repos/damnhandy/Handy-URI-Templates/commits", request.getUrl());
       executeRequest(createClient(), request);
    }
 
@@ -148,7 +148,7 @@ public class TestGitHubApis extends AbstractExampleTest
                               .set("function","commits")
                               .set("id","7cdf7ff75f8ede138228ceff7f5a1c18a5835b94")
                               .expand()).build();
-      Assert.assertEquals("https://api.github.com/repos/damnhandy/Handy-URI-Templates/commits/7cdf7ff75f8ede138228ceff7f5a1c18a5835b94", request.getUrl());
+      Assertions.assertEquals("https://api.github.com/repos/damnhandy/Handy-URI-Templates/commits/7cdf7ff75f8ede138228ceff7f5a1c18a5835b94", request.getUrl());
       executeRequest(createClient(), request);
    }
 

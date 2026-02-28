@@ -1,12 +1,12 @@
 package com.damnhandy.uri.template;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class UriUtilTest
 {
@@ -47,7 +47,7 @@ public class UriUtilTest
    }
 
    @Test
-   @Ignore
+   @Disabled
    public void reservedNothingToEncode() throws Exception
    {
       validate(UNRESERVED + SUBDELIMS + GENDELIMS, UNRESERVED + SUBDELIMS + GENDELIMS);

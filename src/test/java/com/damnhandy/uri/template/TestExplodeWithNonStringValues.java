@@ -17,8 +17,8 @@ package com.damnhandy.uri.template;
 
 
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * A TestExplodeWithNonStringValues.
@@ -34,6 +34,6 @@ public class TestExplodeWithNonStringValues
    public void testExpandInteger() throws Exception
    {
       String result = UriTemplate.fromTemplate(expression).set("foo", new Integer(300)).expand();
-      Assert.assertEquals("/3/300", result);
+      Assertions.assertEquals("/3/300", result);
    }
 }

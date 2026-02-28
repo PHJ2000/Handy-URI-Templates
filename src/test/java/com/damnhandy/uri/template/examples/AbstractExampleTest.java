@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 import com.ning.http.client.AsyncCompletionHandlerBase;
 import com.ning.http.client.AsyncHttpClient;
@@ -57,7 +57,7 @@ public abstract class AbstractExampleTest
          @Override
          public Response onCompleted(Response response) throws Exception
          {
-            Assert.assertEquals(200, response.getStatusCode());
+            Assertions.assertEquals(200, response.getStatusCode());
             //System.out.println(response.getResponseBody());
             l.countDown();
             return super.onCompleted(response);
@@ -66,7 +66,7 @@ public abstract class AbstractExampleTest
 
       if (!l.await(1000, TimeUnit.SECONDS))
       {
-         Assert.fail("Timeout out");
+         Assertions.fail("Timeout out");
       }
       client.close();
    }

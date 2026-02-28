@@ -18,8 +18,8 @@ package com.damnhandy.uri.template;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * A TestMultipleOperators.
@@ -49,7 +49,7 @@ public class TestMultipleOperators
    {
       UriTemplate t = UriTemplate.fromTemplate("/base{/group_id,id}/pages{/page,lang}{?format,q}");
       String uri = t.expand(VALUES);
-      Assert.assertEquals("/base/12345/pages/5/en?format=json&q=URI%20Templates", uri);
+      Assertions.assertEquals("/base/12345/pages/5/en?format=json&q=URI%20Templates", uri);
 
 
    }

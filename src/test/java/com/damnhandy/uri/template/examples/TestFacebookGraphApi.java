@@ -18,11 +18,11 @@ package com.damnhandy.uri.template.examples;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import com.damnhandy.uri.template.UriTemplate;
 import com.ning.http.client.Request;
@@ -44,7 +44,7 @@ import com.ning.http.client.RequestBuilder;
  * @author <a href="ryan@damnhandy.com">Ryan J. McDonough</a>
  * @version $Revision: 1.1 $
  */
-@Ignore
+@Disabled
 public class TestFacebookGraphApi extends AbstractExampleTest
 {
 
@@ -55,10 +55,10 @@ public class TestFacebookGraphApi extends AbstractExampleTest
     * Checks assumptions that the Facebook Access token is set.
     *
     */
-   @BeforeClass
+   @BeforeAll
    public static void setUp()
    {
-      Assume.assumeNotNull(System.getProperty("fb.access_token"));
+      Assumptions.assumeTrue(System.getProperty("fb.access_token") != null);
    }
 
    @Test
@@ -70,7 +70,7 @@ public class TestFacebookGraphApi extends AbstractExampleTest
                               .set("access_token", System.getProperty("fb.access_token"))
                               .expand();
       System.out.println(uri);
-      Assert.assertEquals("https://graph.facebook.com/fql?q=SELECT%20uid2%20FROM%20friend%20WHERE%20uid1%3Dme%28%29&access_token="+System.getProperty("fb.access_token"), uri);
+      Assertions.assertEquals("https://graph.facebook.com/fql?q=SELECT%20uid2%20FROM%20friend%20WHERE%20uid1%3Dme%28%29&access_token="+System.getProperty("fb.access_token"), uri);
       RequestBuilder builder = new RequestBuilder("GET");
 
       Request request = builder.setUrl(uri).build();
@@ -85,7 +85,7 @@ public class TestFacebookGraphApi extends AbstractExampleTest
                               .set("access_token", System.getProperty("fb.access_token"))
                               .expand();
 
-      Assert.assertEquals("https://graph.facebook.com/bgolub?access_token="+System.getProperty("fb.access_token"), uri);
+      Assertions.assertEquals("https://graph.facebook.com/bgolub?access_token="+System.getProperty("fb.access_token"), uri);
       RequestBuilder builder = new RequestBuilder("GET");
       Request request = builder.setUrl(uri).build();
       executeRequest(createClient(), request);
@@ -99,7 +99,7 @@ public class TestFacebookGraphApi extends AbstractExampleTest
                               .set("access_token", System.getProperty("fb.access_token"))
                               .expand();
 
-      Assert.assertEquals("https://graph.facebook.com/bgolub/albums?access_token="+System.getProperty("fb.access_token"), uri);
+      Assertions.assertEquals("https://graph.facebook.com/bgolub/albums?access_token="+System.getProperty("fb.access_token"), uri);
       RequestBuilder builder = new RequestBuilder("GET");
       Request request = builder.setUrl(uri).build();
       executeRequest(createClient(), request);
@@ -119,7 +119,7 @@ public class TestFacebookGraphApi extends AbstractExampleTest
                               .set("access_token", System.getProperty("fb.access_token"))
                               .expand();
 
-      Assert.assertEquals("https://graph.facebook.com/bgolub?fields=id,name,picture&access_token="+System.getProperty("fb.access_token"), uri);
+      Assertions.assertEquals("https://graph.facebook.com/bgolub?fields=id,name,picture&access_token="+System.getProperty("fb.access_token"), uri);
       RequestBuilder builder = new RequestBuilder("GET");
       Request request = builder.setUrl(uri).build();
       executeRequest(createClient(), request);
@@ -145,7 +145,7 @@ public class TestFacebookGraphApi extends AbstractExampleTest
                               .set("access_token", System.getProperty("fb.access_token"))
                               .expand();
       System.out.println(uri);
-      Assert.assertEquals("https://graph.facebook.com/bgolub/albums?fields=id,name,count&access_token="+System.getProperty("fb.access_token"), uri);
+      Assertions.assertEquals("https://graph.facebook.com/bgolub/albums?fields=id,name,count&access_token="+System.getProperty("fb.access_token"), uri);
       RequestBuilder builder = new RequestBuilder("GET");
       Request request = builder.setUrl(uri).build();
       executeRequest(createClient(), request);
@@ -165,7 +165,7 @@ public class TestFacebookGraphApi extends AbstractExampleTest
                               .set("access_token", System.getProperty("fb.access_token"))
                               .expand();
 
-      Assert.assertEquals("https://graph.facebook.com/bgolub?fields=id,name,picture&access_token="+System.getProperty("fb.access_token"), uri);
+      Assertions.assertEquals("https://graph.facebook.com/bgolub?fields=id,name,picture&access_token="+System.getProperty("fb.access_token"), uri);
       RequestBuilder builder = new RequestBuilder("GET");
       Request request = builder.setUrl(uri).build();
       executeRequest(createClient(), request);
@@ -190,7 +190,7 @@ public class TestFacebookGraphApi extends AbstractExampleTest
                               .set("access_token", System.getProperty("fb.access_token"))
                               .expand();
 
-      Assert.assertEquals(
+      Assertions.assertEquals(
             "https://graph.facebook.com/search?q=coffee&type=place&center=37.76,-122.427&distance=1000&limit=5&offset=10&access_token="
                   + System.getProperty("fb.access_token"), uri);
       RequestBuilder builder = new RequestBuilder("GET");

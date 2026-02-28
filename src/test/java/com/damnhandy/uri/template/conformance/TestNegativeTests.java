@@ -16,12 +16,13 @@
 package com.damnhandy.uri.template.conformance;
 
 import java.io.File;
-import java.util.Collection;
 import java.util.Map;
+import java.util.stream.Stream;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import com.damnhandy.uri.template.MalformedUriTemplateException;
 import com.damnhandy.uri.template.UriTemplate;
@@ -35,24 +36,19 @@ import com.damnhandy.uri.template.VariableExpansionException;
  */
 public class TestNegativeTests extends AbstractUriTemplateConformanceTest
 {
-   @Parameters(name = "{1}")
-   public static Collection<Object[]> testData() throws Exception
+   static Stream<Arguments> testData() throws Exception
    {
       File file = new File("./uritemplate-test/negative-tests.json");
       return loadTestData(file);
-   }
-
-   public TestNegativeTests(Map<String, Object> vars, String template, Object expected, String testsuite)
-   {
-      super(vars, template, expected, testsuite);
    }
 
    /**
     *
     * @throws Exception
     */
-   @Test
-   public void test() throws Exception
+   @ParameterizedTest(name = "{1}")
+   @MethodSource("testData")
+   void test(Map<String, Object> variables, String template, Object expected, String testsuite) throws Exception
    {
       boolean pass = true;
       String actual = "";
@@ -70,6 +66,6 @@ public class TestNegativeTests extends AbstractUriTemplateConformanceTest
       {
          pass = false;
       }
-      Assert.assertFalse("Expected "+template+" to fail but got "+actual,pass);
+      Assertions.assertFalse(pass, "Expected "+template+" to fail but got "+actual);
    }
 }

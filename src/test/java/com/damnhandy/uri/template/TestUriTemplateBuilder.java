@@ -15,8 +15,8 @@
  */
 package com.damnhandy.uri.template;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -48,7 +48,7 @@ public class TestUriTemplateBuilder
                                         .fragment(var("prefix", 2))
                                         .build();
 
-      Assert.assertEquals("http://example.com/foo{/thing1,explodedThing*}{#prefix:2}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/foo{/thing1,explodedThing*}{#prefix:2}", template.getTemplate());
    }
 
     @Test
@@ -60,7 +60,7 @@ public class TestUriTemplateBuilder
         .fragment(var("prefix", 2))
         .build();
 
-        Assert.assertEquals("http://example.com/foo{/thing1,exploded_thing*}{#prefix:2}", template.getTemplate());
+        Assertions.assertEquals("http://example.com/foo{/thing1,exploded_thing*}{#prefix:2}", template.getTemplate());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class TestUriTemplateBuilder
                 .fragment(var("prefix", 2))
                 .build();
 
-        Assert.assertEquals("http://example.com/foo{/thing1}{/explodedThing*}{#prefix:2}", template.getTemplate());
+        Assertions.assertEquals("http://example.com/foo{/thing1}{/explodedThing*}{#prefix:2}", template.getTemplate());
     }
 
 
@@ -87,7 +87,7 @@ public class TestUriTemplateBuilder
                                         .build();
 
       print(template);
-      Assert.assertEquals("http://example.com/foo", template.getTemplate());
+      Assertions.assertEquals("http://example.com/foo", template.getTemplate());
    }
 
 
@@ -114,8 +114,8 @@ public class TestUriTemplateBuilder
       //print(template);
       template.set("date", date);
 
-      Assert.assertEquals("http://example.com/foo{/date}", template.getTemplate());
-      Assert.assertEquals("http://example.com/foo/2012-04-20", template.expand());
+      Assertions.assertEquals("http://example.com/foo{/date}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/foo/2012-04-20", template.expand());
    }
 
    @Test
@@ -140,8 +140,8 @@ public class TestUriTemplateBuilder
 
       template.set("date", date);
 
-      Assert.assertEquals("http://example.com/foo{/date}", template.getTemplate());
-      Assert.assertEquals("http://example.com/foo/2012-04-20", template.expand());
+      Assertions.assertEquals("http://example.com/foo{/date}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/foo/2012-04-20", template.expand());
    }
 
    private void print(UriTemplate template) throws Exception
@@ -158,69 +158,71 @@ public class TestUriTemplateBuilder
     *
     * @throws Exception
     */
-   @Test(expected = UriTemplateBuilderException.class)
+   @Test
    public void testMessedUpUri() throws Exception
    {
-      UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI)
-                                        .reserved(VAR_NAME)
-                                        .path(VAR_NAME)
-                                        .query(VAR_NAME)
-                                        .fragment(VAR_NAME)
-                                        .matrix(VAR_NAME)
-                                        .path(VAR_NAME)
-                                        .path(VAR_NAME)
-                                        .path(VAR_NAME)
-                                        .fragment(VAR_NAME)
-                                        .build();
+      Assertions.assertThrows(UriTemplateBuilderException.class, () -> {
+          UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI)
+                                            .reserved(VAR_NAME)
+                                            .path(VAR_NAME)
+                                            .query(VAR_NAME)
+                                            .fragment(VAR_NAME)
+                                            .matrix(VAR_NAME)
+                                            .path(VAR_NAME)
+                                            .path(VAR_NAME)
+                                            .path(VAR_NAME)
+                                            .fragment(VAR_NAME)
+                                            .build();
+      });
    }
 
     @Test
     public void testSimpleExpression() throws Exception
     {
         UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).simple(VAR_NAME).build();
-        Assert.assertEquals("http://example.com/{foo}", template.getTemplate());
+        Assertions.assertEquals("http://example.com/{foo}", template.getTemplate());
     }
 
    @Test
    public void testReservedExpression() throws Exception
    {
       UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).reserved(VAR_NAME).build();
-      Assert.assertEquals("http://example.com/{+foo}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/{+foo}", template.getTemplate());
    }
 
    @Test
    public void testReservedExpressionWithExplode() throws Exception
    {
       UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).reserved(var(VAR_NAME,true)).build();
-      Assert.assertEquals("http://example.com/{+foo*}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/{+foo*}", template.getTemplate());
    }
 
    @Test
    public void testReservedExpressionWithExplodeAndPre() throws Exception
    {
       UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).reserved(var(VAR_NAME,2)).build();
-      Assert.assertEquals("http://example.com/{+foo:2}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/{+foo:2}", template.getTemplate());
    }
 
    @Test
    public void testLabelExpression() throws Exception
    {
       UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).label(VAR_NAME).build();
-      Assert.assertEquals("http://example.com/{.foo}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/{.foo}", template.getTemplate());
    }
 
    @Test
    public void testLabelExpressionWithExplode() throws Exception
    {
       UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).label(var(VAR_NAME,true)).build();
-      Assert.assertEquals("http://example.com/{.foo*}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/{.foo*}", template.getTemplate());
    }
 
    @Test
    public void testLabelExpressionWithExplodeAndPre() throws Exception
    {
       UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).label(var(VAR_NAME,2)).build();
-      Assert.assertEquals("http://example.com/{.foo:2}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/{.foo:2}", template.getTemplate());
    }
 
 
@@ -228,77 +230,77 @@ public class TestUriTemplateBuilder
    public void testFragmentExpression() throws Exception
    {
       UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).fragment("foo").build();
-      Assert.assertEquals("http://example.com/{#foo}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/{#foo}", template.getTemplate());
    }
 
    @Test
    public void testFragmentExpressionWithExplode() throws Exception
    {
       UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).fragment(var("foo",true)).build();
-      Assert.assertEquals("http://example.com/{#foo*}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/{#foo*}", template.getTemplate());
    }
 
    @Test
    public void testFragmentExpressionWithExplodeAndPre() throws Exception
    {
       UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).fragment(var("foo",2)).build();
-      Assert.assertEquals("http://example.com/{#foo:2}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/{#foo:2}", template.getTemplate());
    }
 
     @Test
     public void testQueryContinuation() throws Exception
     {
         UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).continuation("foo").build();
-        Assert.assertEquals("http://example.com/{&foo}", template.getTemplate());
+        Assertions.assertEquals("http://example.com/{&foo}", template.getTemplate());
     }
 
     @Test
     public void testQueryContinuationWithExplode() throws Exception
     {
         UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).continuation(var("foo",true)).build();
-        Assert.assertEquals("http://example.com/{&foo*}", template.getTemplate());
+        Assertions.assertEquals("http://example.com/{&foo*}", template.getTemplate());
     }
 
     @Test
     public void testQueryContinuationWithExplodeAndPre() throws Exception
     {
         UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).continuation(var("foo",2)).build();
-        Assert.assertEquals("http://example.com/{&foo:2}", template.getTemplate());
+        Assertions.assertEquals("http://example.com/{&foo:2}", template.getTemplate());
     }
 
    @Test
    public void testQueryExpression() throws Exception
    {
       UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).query("foo").build();
-      Assert.assertEquals("http://example.com/{?foo}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/{?foo}", template.getTemplate());
    }
 
    @Test
    public void testQueryExpressionWithExplode() throws Exception
    {
       UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).query(var("foo",true)).build();
-      Assert.assertEquals("http://example.com/{?foo*}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/{?foo*}", template.getTemplate());
    }
 
    @Test
    public void testQueryExpressionWithExplodeAndPre() throws Exception
    {
       UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).query(var("foo",2)).build();
-      Assert.assertEquals("http://example.com/{?foo:2}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/{?foo:2}", template.getTemplate());
    }
 
    @Test
    public void testTemplateExpression() throws Exception {
       UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).template("bar/{id}{?filter}").build();
 
-      Assert.assertEquals("http://example.com/bar/{id}{?filter}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/bar/{id}{?filter}", template.getTemplate());
    }
 
    @Test
    public void testTemplateExpressionWithUriTemplate() throws Exception {
       UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI).template(UriTemplate.fromTemplate("bar/{id}{?filter}")).build();
 
-      Assert.assertEquals("http://example.com/bar/{id}{?filter}", template.getTemplate());
+      Assertions.assertEquals("http://example.com/bar/{id}{?filter}", template.getTemplate());
    }
 
 
@@ -308,40 +310,48 @@ public class TestUriTemplateBuilder
         UriTemplate template = UriTemplate.createBuilder()
                                           .literal("http://example.com")
                                           .path("something").query(var("foo",2)).build();
-        Assert.assertEquals("http://example.com{/something}{?foo:2}", template.getTemplate());
+        Assertions.assertEquals("http://example.com{/something}{?foo:2}", template.getTemplate());
     }
 
 
-    @Test(expected = MalformedUriTemplateException.class)
+    @Test
     public void testInvalidVariableName() throws Exception
     {
-        UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI)
-                                          .query("invalid-variable").build();
-        Assert.fail();
+        Assertions.assertThrows(MalformedUriTemplateException.class, () -> {
+            UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI)
+                                              .query("invalid-variable").build();
+            Assertions.fail();
+        });
     }
 
-    @Test(expected = MalformedUriTemplateException.class)
+    @Test
     public void testInvalidVariableNameWithSpaces() throws Exception
     {
-        UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI)
-                                          .fragment("invalid variable").build();
-        Assert.fail();
+        Assertions.assertThrows(MalformedUriTemplateException.class, () -> {
+            UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI)
+                                              .fragment("invalid variable").build();
+            Assertions.fail();
+        });
     }
 
-    @Test(expected = MalformedUriTemplateException.class)
+    @Test
     public void testInvalidVarNameUsingExpressionSyntax() throws Exception
     {
-        UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI)
-                                          .query("{?invalid_variable}").build();
-        Assert.fail();
+        Assertions.assertThrows(MalformedUriTemplateException.class, () -> {
+            UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI)
+                                              .query("{?invalid_variable}").build();
+            Assertions.fail();
+        });
     }
 
-    @Test(expected = MalformedUriTemplateException.class)
+    @Test
     public void testInvalidVarNameWithTilde() throws Exception
     {
-        UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI)
-                                          .path("~foo").build();
-        Assert.fail();
+        Assertions.assertThrows(MalformedUriTemplateException.class, () -> {
+            UriTemplate template = UriTemplate.buildFromTemplate(BASE_URI)
+                                              .path("~foo").build();
+            Assertions.fail();
+        });
     }
 
 

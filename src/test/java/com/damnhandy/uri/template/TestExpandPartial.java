@@ -19,8 +19,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 
 
@@ -33,7 +33,7 @@ public class TestExpandPartial {
    {
       Map<String, Object> values = Collections.emptyMap();
       String result = UriTemplate.expandPartial(TEMPLATE, values);
-      Assert.assertEquals(TEMPLATE, result);
+      Assertions.assertEquals(TEMPLATE, result);
    }
 
    @Test
@@ -50,7 +50,7 @@ public class TestExpandPartial {
        values.put("anchor2", "value6");
 
       String result = UriTemplate.expandPartial(TEMPLATE, values);
-      Assert.assertEquals("https://foo.com:8080/things/123/456?param1=value1&param2=value2&param3=value3&param4=value4#value5,value6", result);
+      Assertions.assertEquals("https://foo.com:8080/things/123/456?param1=value1&param2=value2&param3=value3&param4=value4#value5,value6", result);
    }
 
    @Test
@@ -63,7 +63,7 @@ public class TestExpandPartial {
        values.put("anchor2", "value6");
 
       String result = UriTemplate.expandPartial(TEMPLATE, values);
-      Assert.assertEquals("https://foo.com:8080/things/123/456{?param1,param2}{&param3,param4}#value5,value6", result);
+      Assertions.assertEquals("https://foo.com:8080/things/123/456{?param1,param2}{&param3,param4}#value5,value6", result);
    }
 
    @Test
@@ -74,7 +74,7 @@ public class TestExpandPartial {
        values.put("param4", "value4");
 
       String result = UriTemplate.expandPartial(TEMPLATE, values);
-      Assert.assertEquals("https://foo.com:8080/things/123{/thingSubId}{?param1,param2}{&param3}&param4=value4{#anchor1,anchor2}", result);
+      Assertions.assertEquals("https://foo.com:8080/things/123{/thingSubId}{?param1,param2}{&param3}&param4=value4{#anchor1,anchor2}", result);
    }
 
    @Test
@@ -87,7 +87,7 @@ public class TestExpandPartial {
        values.put("anchor1", "value5");
 
       String result = UriTemplate.expandPartial(TEMPLATE, values);
-      Assert.assertEquals("https://foo.com:8080/things/123{/thingSubId}?param1=value1{&param2}&param3=value3{&param4}#value5{,anchor2}", result);
+      Assertions.assertEquals("https://foo.com:8080/things/123{/thingSubId}?param1=value1{&param2}&param3=value3{&param4}#value5{,anchor2}", result);
    }
 
    @Test
@@ -100,7 +100,7 @@ public class TestExpandPartial {
        values.put("anchor2", "value6");
 
       String result = UriTemplate.expandPartial(TEMPLATE, values);
-      Assert.assertEquals("https://foo.com:8080/things{/thingId}/456?param2=value2{&param1}{&param3}&param4=value4{#anchor1},value6", result);
+      Assertions.assertEquals("https://foo.com:8080/things{/thingId}/456?param2=value2{&param1}{&param3}&param4=value4{#anchor1},value6", result);
    }
 
    @Test
@@ -110,7 +110,7 @@ public class TestExpandPartial {
        values.put("path1", "abc/def");
        values.put("path2", "/ghi/jkl");
      String partiallyExpanded = UriTemplate.expandPartial(template, values);
-     Assert.assertEquals("/base/abc/def/ghi/jkl{a*,b*}", partiallyExpanded);
+     Assertions.assertEquals("/base/abc/def/ghi/jkl{a*,b*}", partiallyExpanded);
    }
 
    @Test
@@ -120,7 +120,7 @@ public class TestExpandPartial {
       Map<String, Object> values = new HashMap<>();
       values.put("var2", "value-of-var2");
       String partiallyExpanded = UriTemplate.expandPartial(template, values);
-      Assert.assertEquals("?var2=value-of-var2{&var1}", partiallyExpanded);
+      Assertions.assertEquals("?var2=value-of-var2{&var1}", partiallyExpanded);
 
    }
 

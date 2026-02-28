@@ -1,24 +1,24 @@
 /*
- * 
+ *
  */
 package com.damnhandy.uri.template.conformance;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import com.damnhandy.uri.template.UriTemplate;
 
 /**
- * 
- * 
+ *
+ *
  * @author <a href="ryan@damnhandy.com">Ryan J. McDonough</a>
  * @version $Revision: 1.1 $
  */
-@Ignore
+@Disabled
 public class TestSingleExpression
 {
 
@@ -57,7 +57,7 @@ public class TestSingleExpression
 
       String expected = "";
       String result = template.expand();
-      Assert.assertEquals(expected, result);
+      Assertions.assertEquals(expected, result);
 
       String r2 = com.damnhandy.uri.template.UriTemplate.expand("", new java.util.HashMap<String, Object>() {
           @Override
@@ -68,6 +68,6 @@ public class TestSingleExpression
 
       //Pattern p = Pattern.compile("([?&](fields)(?:=([^&]*))?)([?&](first_name)(?:=([^&]*))?)([?&](last.name)(?:=([^&]*))?)([?&](token)(?:=([^&]*))?)");
    }
-   
-  
+
+
 }

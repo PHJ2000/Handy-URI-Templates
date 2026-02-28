@@ -18,10 +18,10 @@ package com.damnhandy.uri.template.examples;
 import com.damnhandy.uri.template.UriTemplate;
 import com.ning.http.client.Request;
 import com.ning.http.client.RequestBuilder;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -44,15 +44,15 @@ public class TestTwitterSearchApi extends AbstractExampleTest
     *
     * @throws Exception
     */
-   @BeforeClass
+   @BeforeAll
    public static void setUp() throws Exception
    {
        try {
-           Assume.assumeTrue(InetAddress.getByName("search.twitter.com").isReachable(1000));
+           Assumptions.assumeTrue(InetAddress.getByName("search.twitter.com").isReachable(1000));
        }
        catch (UnknownHostException e)
        {
-           Assume.assumeFalse(true);
+           Assumptions.assumeFalse(true);
        }
 
    }
@@ -75,7 +75,7 @@ public class TestTwitterSearchApi extends AbstractExampleTest
                                      .set("result_type", "mixed")
                                      .expand();
       Request request = builder.setUrl(uri).build();
-      Assert.assertEquals("http://search.twitter.com/search.json?q=URI%20Templates&result_type=mixed&rpp=5&include_entities=true&result_type=mixed", uri);
+      Assertions.assertEquals("http://search.twitter.com/search.json?q=URI%20Templates&result_type=mixed&rpp=5&include_entities=true&result_type=mixed", uri);
       executeRequest(createClient(), request);
    }
 

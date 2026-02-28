@@ -18,10 +18,8 @@ package com.damnhandy.uri.template.conformance;
 import com.damnhandy.uri.template.UriTemplate;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.provider.Arguments;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,11 +28,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * @author <a href="mailto:ryan@damnhandy.com">Ryan J. McDonough</a>
  */
-@RunWith(Parameterized.class)
 public abstract class AbstractUriTemplateConformanceTest
 {
 
@@ -48,7 +46,7 @@ public abstract class AbstractUriTemplateConformanceTest
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    protected static Collection<Object[]> loadTestData(File file) throws Exception
+    protected static Stream<Arguments> loadTestData(File file) throws Exception
     {
         InputStream in = new FileInputStream(file);
         try
@@ -58,7 +56,7 @@ public abstract class AbstractUriTemplateConformanceTest
             {
             });
 
-            List<Object[]> params = new ArrayList<Object[]>();
+            List<Arguments> params = new ArrayList<>();
             for (Map.Entry<String, Object> entry : testsuites.entrySet())
             {
                 String name = entry.getKey();
@@ -68,15 +66,10 @@ public abstract class AbstractUriTemplateConformanceTest
 
                 for (List<Object> test : testcases)
                 {
-                    Object[] p = new Object[4];
-                    p[0] = variables;
-                    p[1] = test.get(0); // expression
-                    p[2] = test.get(1); // expected result
-                    p[3] = name;        // test suite label
-                    params.add(p);
+                    params.add(Arguments.of(variables, test.get(0), test.get(1), name));
                 }
             }
-            return params;
+            return params.stream();
         }
         finally
         {
@@ -87,45 +80,16 @@ public abstract class AbstractUriTemplateConformanceTest
     }
 
     /**
-     * The name of the testsuite
-     */
-    protected String testsuite;
-
-    /**
-     * The expression patter string
-     */
-    protected String template;
-
-    /**
-     * The expected result
-     */
-    protected Object expected;
-
-    /**
-     * The collection of variables to be used on each test
-     */
-    protected Map<String, Object> variables;
-
-    /**
-     * @param vars
+     * Executes a conformance test case.
+     *
+     * @param variables
      * @param template
      * @param expected
      * @param testsuite
-     */
-    public AbstractUriTemplateConformanceTest(Map<String, Object> vars, String template, Object expected, String testsuite)
-    {
-        this.template = template;
-        this.expected = expected;
-        this.variables = vars;
-        this.testsuite = testsuite;
-    }
-
-    /**
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    @Test
-    public void test() throws Exception
+    protected static void executeConformanceTest(Map<String, Object> variables, String template, Object expected, String testsuite) throws Exception
     {
         UriTemplate t = UriTemplate.fromTemplate(template);
         String actual;
@@ -134,7 +98,7 @@ public abstract class AbstractUriTemplateConformanceTest
             actual = t.expand(variables);
             if (expected instanceof String)
             {
-                Assert.assertEquals(testsuite + "->  Template: " + template, expected, actual);
+                Assertions.assertEquals(expected, actual, testsuite + "->  Template: " + template);
             }
             else if (expected instanceof Collection)
             {
@@ -148,12 +112,12 @@ public abstract class AbstractUriTemplateConformanceTest
                         break;
                     }
                 }
-                Assert.assertTrue(testsuite + "->  Template: " + template + " returned " + actual + " and did not match any combination", match);
+                Assertions.assertTrue(match, testsuite + "->  Template: " + template + " returned " + actual + " and did not match any combination");
             }
         }
         catch (Exception e)
         {
-            Assert.fail(testsuite + "->  Template: " + template + " returned " + e.getMessage() + " and did not match any combination");
+            Assertions.fail(testsuite + "->  Template: " + template + " returned " + e.getMessage() + " and did not match any combination");
         }
 
     }
