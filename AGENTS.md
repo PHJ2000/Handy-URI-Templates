@@ -77,7 +77,6 @@ All Java source files must include the Apache License 2.0 header with copyright 
 
 | Dependency | Scope | Notes |
 |---|---|---|
-| joda-time | compile | Date/time utilities |
 | jackson-core/databind/annotations | optional | JSON support |
 | junit 4.13.1 | test | Testing framework |
 | httpclient | test | Example/integration tests |

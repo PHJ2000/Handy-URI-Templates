@@ -23,7 +23,6 @@
         <spotbugs.plugin>4.0.0</spotbugs.plugin>
         <jacoco.version>0.8.12</jacoco.version>
         <javadoc.plugin>3.2.0</javadoc.plugin>
-        <joda.version>2.10.6</joda.version>
     </properties>
 
     <url>https://github.com/damnhandy/Handy-URI-Templates</url>
@@ -648,11 +647,5 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Date/Time Utilities -->
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>${joda.version}</version>
-        </dependency>
     </dependencies>
 </project>
